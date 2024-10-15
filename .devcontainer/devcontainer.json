@@ -1,0 +1,78 @@
+{
+    "context": "../",
+    "image": "rust_base:local_latest",
+    "remoteUser": "root",
+    "privileged": true,
+    "workspaceMount": "source=${localWorkspaceFolder},target=/root/rust,type=bind,consistency=cached",
+    "workspaceFolder": "/root/rust",
+    // "containerEnv": {
+    //     "DISPLAY": "${localEnv:DISPLAY}",
+    //     "GAZEBO_MODEL_PATH": "~/amr_interface_ros2_python/src/ros2_workspace/src/simulation/aagv_gazebo/models:$GAZEBO_MODEL_PATH"
+    // },
+    "mounts": [
+        { // for build with rosdep installations
+            "source": "/usr/local/share/ca-certificates",
+            "target": "/usr/local/share/ca-certificates",
+            "type": "bind"
+        },
+        { // for build with rosdep installations
+            "source": "/etc/ssl/certs",
+            "target": "/etc/ssl/certs",
+            "type": "bind"
+        },
+        { // for getting git global config from host to container (see post_start_command.sh)
+            "source": "${localEnv:HOME}/.gitconfig",
+            "target": "/root/host/.gitconfig",
+            "type": "bind"
+        },
+        { // for getting git global config from host to container (see post_start_command.sh)
+            "source": "${localEnv:HOME}/Documents/oh_my_posh",
+            "target": "/root/Documents/oh_my_posh",
+            "type": "bind"
+        },
+        { // for getting git global config from host to container (see post_start_command.sh)
+            "source": "${localEnv:HOME}/.bashrc",
+            "target": "/root/.bashrc",
+            "type": "bind"
+        }
+    ],
+    // "build": {
+    //     "args": {
+    //         "format": "docker"
+    //     }
+    // },
+    "name": "rust_dev",
+    "runArgs": [
+        "--cap-add=ALL",
+        "--security-opt",
+        "seccomp=unconfined",
+        "--network=host",
+        "--ipc=host",
+        "--privileged"
+    ],
+    // "postStartCommand": ".devcontainer/post_start_command.sh",
+    "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "ms-python.python",
+        "mhutchie.git-graph",
+        "xaver.clang-format",
+        // disabled because random generation of zip files and models
+        // "visualstudioexptteam.vscodeintellicode",
+        "donjayamanne.githistory",
+        "ms-azuretools.vscode-docker",
+        "mde.select-highlight-minimap",
+        "grimmer.vscode-back-forward-button",
+        "nick-rudenko.back-n-forth",
+        "ms-iot.vscode-ros",
+        "redhat.vscode-yaml",
+        "smilerobotics.urdf",
+        "yzhang.markdown-all-in-one",
+        "ms-vscode.cpptools-extension-pack",
+        "rust-lang.rust-analyzer",
+        "Swellaby.rust-pack",
+        "JScearcy.rust-doc-viewer",
+        "azemoh.one-monokai",
+        "serayuzgur.crates"
+    ]
+}
